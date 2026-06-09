@@ -2,7 +2,7 @@ from Bio import SeqIO
 from Bio.SeqUtils import molecular_weight, IsoelectricPoint
 from collections import Counter
 
-record = SeqIO.read("data/Insulin.fasta", "fasta")
+record = SeqIO.read("data/Human_Hemoglobin.fasta", "fasta")
 
 sequence = str(record.seq)
 
