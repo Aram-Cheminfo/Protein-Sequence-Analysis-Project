@@ -1,24 +1,25 @@
+import os
 from Bio import SeqIO
 from Bio.SeqUtils import molecular_weight, IsoelectricPoint
 from collections import Counter
 
-record = SeqIO.read("data/Human_Hemoglobin.fasta", "fasta")
+for file in os.listdir("data"):
+    if file.endswith(".fasta"):
 
-sequence = str(record.seq)
+        print("\n==============================")
 
-mw = molecular_weight(sequence, seq_type="protein")
+        record = SeqIO.read(f"data/{file}", "fasta")
+        seq = str(record.seq)
 
-ip = IsoelectricPoint.IsoelectricPoint(sequence)
-pi = ip.pi()
+        mw = molecular_weight(seq, seq_type="protein")
+        ip = IsoelectricPoint.IsoelectricPoint(seq).pi()
+        aa = Counter(seq)
 
-aa_counts = Counter(sequence)
+        print("Protein:", file)
+        print("Length:", len(seq))
+        print("Molecular Weight:", round(mw, 2))
+        print("pI:", round(ip, 2))
 
-print("Protein ID:", record.id)
-print("Protein Name:", record.description)
-print("Length:", len(sequence))
-print("Molecular Weight:", round(mw, 2))
-print("pI:", round(pi, 2))
-
-print("\nAmino Acid Composition:")
-for aa, count in sorted(aa_counts.items()):
-    print(f"{aa}: {count}")
+        print("\nAmino Acid Composition:")
+        for k, v in sorted(aa.items()):
+            print(k, v)
